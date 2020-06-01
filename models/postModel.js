@@ -15,12 +15,21 @@ const postSchema = new Schema({
         ref: 'comment'
     }],
     images: {
-        type: String
+        type: String,
+        default: ''
     },
     creationDate: {
         type: Date,
         default: Date.now()
+    },
+    allowComments: {
+        type: Boolean,
+        default: false
+    },
+    status: {
+        type: String,
+        default: 'public'
     }
 })
 
-module.exports = Post = mongoose.model('posts', postSchema)
+module.exports = Post = mongoose.model('post', postSchema)
