@@ -69,7 +69,7 @@ module.exports = {
         res.render('index/login')
     },
     postLogin: (req, res) => {
-        passport.authenticate('local', { successRedirect: '/feeds', failureRedirect: 'index/login' }),
+        passport.authenticate('local', { successRedirect: 'user/feeds', failureRedirect: 'index/login' }),
             function (req, res) {
                 res.redirect('/login');
             }

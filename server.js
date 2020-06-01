@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
 const indexRoute = require('./routes/indexRoute') 
+const userRoute = require('./routes/userRoute')
 const port = require('./config/port')
 const db = require('./config/db')
 const session = require('express-session');
@@ -43,6 +44,8 @@ app.set('view engine', 'handlebars');
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRoute);
+app.use('/user', userRoute);
+
 
 app.listen(port.portID, (req, res)=>{
     console.log('Server is running at port ' + port.portID)

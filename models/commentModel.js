@@ -8,6 +8,11 @@ const commentSchema = new Schema({
         ref: 'user'
     },
 
+    body: {
+        type: String,
+        required: true
+    },
+
     date: {
         type: Date,
         default: Date.now()
@@ -18,9 +23,8 @@ const commentSchema = new Schema({
         default: false
     }
 
-
 });
 
 module.exports = {
-    Comment: mongoose.model('comment', CommentSchema)
+    Comment: mongoose.model('comment', commentSchema)
 };
