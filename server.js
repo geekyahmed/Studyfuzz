@@ -5,17 +5,21 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
-const indexRoute = require('./routes/indexRoute') 
+const indexRoute = require('./routes/indexRoute')
 const userRoute = require('./routes/userRoute')
 const port = require('./config/port')
 const db = require('./config/db')
 const session = require('express-session');
+const passport = require('passport');
 const app = express();
+
 
 //Setting Up Express
 app.use(express())
 app.use(express.json());
-app.use(express.urlencoded({extended:false}));
+app.use(express.urlencoded({
+    extended: false
+}));
 app.use(cookieParser());
 
 //Setting Up Session
@@ -26,7 +30,10 @@ app.use(session({
 }))
 
 //Setting Up Mongoose
-mongoose.connect(db.dbURL , {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(db.dbURL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
     .then(response => {
         console.log('MongoDB connected succesfully')
     })
@@ -40,13 +47,15 @@ app.engine('handlebars', exphbs({
     defaultLayout: 'index'
 }));
 app.set('view engine', 'handlebars');
-
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', indexRoute);
 app.use('/user', userRoute);
 
 
-app.listen(port.portID, (req, res)=>{
+app.listen(port.portID, (req, res) => {
     console.log('Server is running at port ' + port.portID)
 })

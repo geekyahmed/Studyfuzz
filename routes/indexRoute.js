@@ -6,6 +6,7 @@ const User = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 const LocalStrategy = require('passport-local')
 
+
 // Defining Local Strategy
 passport.use(new LocalStrategy({
     usernameField: 'email',
@@ -43,6 +44,7 @@ passport.deserializeUser(function (id, done) {
     });
 });
 
+
 router.route('/register')
     .get(authController.getRegister)    
     .post(authController.postRegister)
@@ -54,5 +56,8 @@ router.route('/login')
         failureRedirect: '/login',
         session: true
     }),authController.postLogin)
+
+    router.route('/logout')
+        .get(authController.getLogout)
 
     module.exports = router
