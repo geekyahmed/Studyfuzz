@@ -4,7 +4,8 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const exphbs = require('express-handlebars');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const indexRoute = require('./routes/indexRoute') 
 const port = require('./config/port')
 const db = require('./config/db')
 const session = require('express-session');
@@ -40,9 +41,8 @@ app.engine('handlebars', exphbs({
 app.set('view engine', 'handlebars');
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.get('/login', (req, res)=> {
-    res.render('index/login')
-})
+
+app.use('/', indexRoute);
 
 app.listen(port.portID, (req, res)=>{
     console.log('Server is running at port ' + port.portID)

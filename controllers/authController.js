@@ -6,13 +6,14 @@ const bcrypt = require('bcryptjs')
 const User = require('../models/userModel')
 
 module.exports = {
+    getRegister: (req, res)=> {
+        res.render('index/register')
+    },
     postRegister: (req, res) => {
-        const firstName = req.body.firstName;
         const username = req.body.username;
-        const lastName = req.body.lastName;
+        const fullname = req.body.fullname;
         const email = req.body.email;
         const password = req.body.password;
-        const confirmPassword = req.body.confirmPassword;
         {
             User.findOne({ email: email, username: username }).then(function (currentUser) {
                 if (currentUser) {
@@ -20,8 +21,7 @@ module.exports = {
                     res.redirect('/register')
                 } else {
                     const newUser = new User({
-                        firstName: firstName,
-                        lastName: lastName,
+                        fullname: fullname,
                         email: email,
                         username: username,
                         password: password
