@@ -65,8 +65,11 @@ module.exports = {
             });
         }
     },
+    getLogin: (rea, res)=> {
+        res.render('index/login')
+    },
     postLogin: (req, res) => {
-        passport.authenticate('local', { successRedirect: '/', failureRedirect: '/users/login' }),
+        passport.authenticate('local', { successRedirect: '/feeds', failureRedirect: 'index/login' }),
             function (req, res) {
                 res.redirect('/login');
             }
