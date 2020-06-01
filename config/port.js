@@ -1,9 +1,7 @@
 require('dotenv').config()
 
-const config = {
-    app:{
-        port : process.env.PORT_NUMBER
-    }
+const port = {
+        portID : process.env.PORT_NUMBER
 }
 
-module.exports = config;
+module.exports = port;

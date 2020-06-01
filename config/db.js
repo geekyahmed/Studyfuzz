@@ -1,1 +1,3 @@
-require
+require('dotenv').config()
+
+const 

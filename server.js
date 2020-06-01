@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const exphbs = require('express-handlebars');
-const config = require('./config/port')
+const port = require('./config/port')
 const session = require('express-session');
 const app = express();
 
@@ -21,6 +21,6 @@ app.set('view engine', 'handlebars');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.listen(config.app.port, (req, res)=>{
-    console.log('Server is running at port' + config.app.port)
+app.listen(port.portID, (req, res)=>{
+    console.log('Server is running at port' + port.portID)
 })
