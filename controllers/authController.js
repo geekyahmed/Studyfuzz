@@ -1,5 +1,8 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
+const nodemailer = require('nodemailer')
+const crypto = require('crypto')
+const bcrypt = require('bcryptjs')
 const User = require('../models/userModel')
 
 module.exports = {
@@ -16,20 +19,24 @@ module.exports = {
                     console.log('user is already registered:', currentUser);
                     res.redirect('/register')
                 } else {
-                    var newUser = new User({
+                    const newUser = new User({
                         firstName: firstName,
                         lastName: lastName,
                         email: email,
                         username: username,
                         password: password
                     });
-                    newUser.save(function (err, user) {
-                        if (err) throw err;
-                        console.log(user);
-                    })
-                    res.redirect('/login');
+                     bcrypt.genSalt(10, (err, salt) => {
+                        bcrypt.hash(newUser.password, salt, (err, hash) => {
+                            newUser.password = hash;
+                            newUser.save().then(user => {
+                                res.redirect('/login');
+                            });
+                        });
+                    });
                 }
-            })
+            });
+
             passport.use(new LocalStrategy(
                 function (username, password, done) {
                     User.findOne({
