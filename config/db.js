@@ -1,3 +1,7 @@
 require('dotenv').config()
 
-const 
+const db = {
+    dbURL : process.env.MONGODB_URL
+}
+
+module.exports = db
