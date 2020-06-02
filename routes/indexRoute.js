@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router();
 const authController = require('../controllers/authController')
 const passport = require('passport')
-const User = require('../models/userModel');
+const User = require('../models/userModel').User;
 const bcrypt = require('bcryptjs');
 const LocalStrategy = require('passport-local')
 
@@ -57,7 +57,5 @@ router.route('/login')
         session: true
     }),authController.postLogin)
 
-    router.route('/logout')
-        .get(authController.getLogout)
 
     module.exports = router

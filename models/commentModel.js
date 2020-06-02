@@ -20,7 +20,7 @@ const commentSchema = new Schema({
 
     commentIsApproved: {
         type: Boolean,
-        default: false
+        default: true
     }
 
 });

@@ -5,6 +5,7 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-4 pd-left-none no-pd">
                         <div class="main-left-sidebar no-margin">
+
                             <div class="user-data full-width">
                                 <div class="user-profile">
                                     <div class="username-dt">
@@ -14,7 +15,7 @@
                                     </div>
                                     <!--username-dt end-->
                                     <div class="user-specs">
-                                        <h3>John Doe</h3>
+                                        <h3>{{fullname}}</h3>
                                         <span>Graphic Designer at Self Employed</span>
                                     </div>
                                 </div>
@@ -41,17 +42,19 @@
                                 </div>
                                 <!--sd-title end-->
                                 <div class="suggestions-list">
+                                    {{#each users}}
                                     <div class="suggestion-usd">
                                         <img src="http://via.placeholder.com/35x35" alt="">
                                         <div class="sgt-text">
-                                            <h4>Jessica William</h4>
-                                            <span>Graphic Designer</span>
+                                            <h4>{{fullname}}</h4>
+                                            <span>{{bio}}</span>
                                         </div>
                                         <span><i class="la la-plus"></i></span>
                                     </div>
                                     <div class="view-more">
                                         <a href="#" title="">View More</a>
                                     </div>
+                                    {{/each}}
                                 </div>
                                 <!--suggestions-list end-->
                             </div>
@@ -84,54 +87,15 @@
                                 </div>
                                 <div class="post-st">
                                     <ul>
+                                        <textarea class="form-control" rows="4"></textarea>
                                         <li><a class="post_project" href="#" title="">Post a Project</a></li>
-                                        <li><a class="post-jb active" href="#" title="">Post a Job</a></li>
                                     </ul>
                                 </div>
                                 <!--post-st end-->
                             </div>
                             <!--post-topbar end-->
                             <div class="posts-section">
-                                <div class="post-bar">
-                                    <div class="post_topbar">
-                                        <div class="usy-dt">
-                                            <img src="http://via.placeholder.com/50x50" alt="">
-                                            <div class="usy-name">
-                                                <h3>John Doe</h3>
-                                                <span><img src="images/clock.png" alt="">3 min ago</span>
-                                            </div>
-                                        </div>
-                                        <div class="ed-opts">
-                                            <a href="#" title="" class="ed-opts-open"><i
-                                                    class="la la-ellipsis-v"></i></a>
-                                            <ul class="ed-options">
-                                                <li><a href="#" title="">Edit Post</a></li>
-                                                <li><a href="#" title="">Unsaved</a></li>
-                                                <li><a href="#" title="">Unbid</a></li>
-                                                <li><a href="#" title="">Close</a></li>
-                                                <li><a href="#" title="">Hide</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="job_descp">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam luctus
-                                            hendrerit metus, ut ullamcorper quam finibus at. Etiam id magna sit amet...
-                                            <a href="#" title="">view more</a></p>
-                                    </div>
-                                    <div class="job-status-bar">
-                                        <ul class="like-com">
-                                            <li>
-                                                <a href="#"><i class="la la-heart"></i> Like</a>
-                                                <img src="images/liked-img.png" alt="">
-                                                <span>25</span>
-                                            </li>
-                                            <li><a href="#" title="" class="com"><img src="images/com.png" alt="">
-                                                    Comment 15</a></li>
-                                        </ul>
-                                        <a><i class="la la-eye"></i>Views 50</a>
-                                    </div>
-                                </div>
-                                <!--post-bar end-->
+
                                 <div class="top-profiles">
                                     <div class="pf-hd">
                                         <h3>Top Profiles</h3>
@@ -156,89 +120,46 @@
                                     <!--profiles-slider end-->
                                 </div>
                                 <!--top-profiles end-->
-
-                                <div class="posty">
-                                    <div class="post-bar no-margin">
-                                        <div class="post_topbar">
-                                            <div class="usy-dt">
-                                                <img src="http://via.placeholder.com/50x50" alt="">
-                                                <div class="usy-name">
-                                                    <h3>John Doe</h3>
-                                                    <span><img src="images/clock.png" alt="">3 min ago</span>
-                                                </div>
-                                            </div>
-                                            <div class="ed-opts">
-                                                <a href="#" title="" class="ed-opts-open"><i
-                                                        class="la la-ellipsis-v"></i></a>
-                                                <ul class="ed-options">
-                                                    <li><a href="#" title="">Edit Post</a></li>
-                                                    <li><a href="#" title="">Unsaved</a></li>
-                                                    <li><a href="#" title="">Unbid</a></li>
-                                                    <li><a href="#" title="">Close</a></li>
-                                                    <li><a href="#" title="">Hide</a></li>
-                                                </ul>
+                                {{#each posts}}
+                                <div class="post-bar">
+                                    <div class="post_topbar">
+                                        <div class="usy-dt">
+                                            <img src="http://via.placeholder.com/50x50" alt="">
+                                            <div class="usy-name">
+                                                <h3>John Doe</h3>
+                                                <span><img src="images/clock.png" alt="">{{date}}</span>
                                             </div>
                                         </div>
-
-                                        <div class="job_descp">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam luctus
-                                                hendrerit metus, ut ullamcorper quam finibus at. Etiam id magna sit
-                                                amet... <a href="#" title="">view more</a></p>
-                                        </div>
-                                        <div class="job-status-bar">
-                                            <ul class="like-com">
-                                                <li>
-                                                    <a href="#"><i class="la la-heart"></i> Like</a>
-                                                    <img src="images/liked-img.png" alt="">
-                                                    <span>25</span>
-                                                </li>
-                                                <li><a href="#" title="" class="com"><img src="images/com.png" alt="">
-                                                        Comment 15</a></li>
-                                            </ul>
-                                            <a><i class="la la-eye"></i>Views 50</a>
-                                        </div>
-                                    </div>
-                                    <!--post-bar end-->
-                                    <div class="comment-section">
-
-                                        <div class="comment-sec">
-                                            <ul>
-                                                <li>
-                                                    <div class="comment-list">
-                                                        <div class="bg-img">
-                                                            <img src="http://via.placeholder.com/40x40" alt="">
-                                                        </div>
-                                                        <div class="comment">
-                                                            <h3>John Doe</h3>
-                                                            <span><img src="images/clock.png" alt=""> 3 min ago</span>
-                                                            <p>Lorem ipsum dolor sit amet, </p>
-                                                            <a href="#" title="" class="active"><i
-                                                                    class="fa fa-reply-all"></i>Reply</a>
-                                                        </div>
-                                                    </div>
-
-                                                </li>
-                                                <li>
-
-                                                </li>
+                                        <div class="ed-opts">
+                                            <a href="#" title="" class="ed-opts-open"><i
+                                                    class="la la-ellipsis-v"></i></a>
+                                            <ul class="ed-options">
+                                                <li><a href="#" title="">Edit Post</a></li>
+                                                <li><a href="#" title="">Unsaved</a></li>
+                                                <li><a href="#" title="">Unbid</a></li>
+                                                <li><a href="#" title="">Close</a></li>
+                                                <li><a href="#" title="">Hide</a></li>
                                             </ul>
                                         </div>
-                                        <!--comment-sec end-->
-                                        <div class="post-comment">
-                                            <div class="cm_img">
-                                                <img src="http://via.placeholder.com/40x40" alt="">
-                                            </div>
-                                            <div class="comment_box">
-                                                <form>
-                                                    <input type="text" placeholder="Post a comment">
-                                                    <button type="submit">Send</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                        <!--post-comment end-->
                                     </div>
-                                    <!--comment-section end-->
+                                    <div class="job_descp">
+                                        <p>{{description}}
+                                        </p>
+                                    </div>
+                                    <div class="job-status-bar">
+                                        <ul class="like-com">
+                                            <li>
+                                                <a href="#"><i class="la la-heart"></i> Like</a>
+                                            </li>
+                                            <li><a href="#" title="" class="com"><img src="images/com.png" alt="">
+                                                    Comment {{comments.length}}</a></li>
+                                        </ul>
+                                        <a><i class="la la-eye"></i>Views 50</a>
+                                    </div>
                                 </div>
+                                <!--post-bar end-->
+                                {{/each}}
+
                                 <!--posty end-->
                                 <div class="process-comm">
                                     <div class="spinner">
@@ -335,13 +256,5 @@
         </div>
     </div>
 </main>
-
-
-
-
-
-
-
-
 </div>
 <!--theme-layout end-->

@@ -24,7 +24,7 @@ const postSchema = new Schema({
     },
     allowComments: {
         type: Boolean,
-        default: false
+        default: true
     },
     status: {
         type: String,
@@ -32,4 +32,6 @@ const postSchema = new Schema({
     }
 })
 
-module.exports = Post = mongoose.model('post', postSchema)
+module.exports = {
+    Post: mongoose.model('post', postSchema)
+};

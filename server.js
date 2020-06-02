@@ -11,6 +11,7 @@ const port = require('./config/port')
 const db = require('./config/db')
 const session = require('express-session');
 const passport = require('passport');
+const {variables} = require('./middlewares/variables')
 const app = express();
 
 
@@ -51,6 +52,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(variables);
 
 app.use('/', indexRoute);
 app.use('/user', userRoute);
