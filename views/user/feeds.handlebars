@@ -86,10 +86,34 @@
                                     <img src="http://via.placeholder.com/100x100" alt="">
                                 </div>
                                 <div class="post-st">
-                                    <ul>
-                                        <textarea class="form-control" rows="4"></textarea>
-                                        <li><a class="post_project" href="#" title="">Post a Project</a></li>
-                                    </ul>
+                                    <div class=" pst-pj">
+                                        <div class="post-project">
+                                            <h3>Hi {{fullname}}</h3>
+                                            <div class="post-project-fields">
+                                                <form action="/user/feeds/new" method="POST">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <textarea name="description"
+                                                                placeholder="Description"></textarea>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <ul>
+                                                                <li><button class="active" type="submit"
+                                                                        value="post">Post</button></li>
+                                                                <li><button class="active" 
+                                                                        value="post">Cancel</button></li>
+
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <!--post-project-fields end-->
+                                            <a href="#" title=""><i class="la la-times-circle-o"></i></a>
+                                        </div>
+                                        <!--post-project end-->
+                                    </div>
+                                    <!--post-project-popup end-->
                                 </div>
                                 <!--post-st end-->
                             </div>

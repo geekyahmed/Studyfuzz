@@ -16,14 +16,11 @@ const userSchema = new Schema({
     },
     password: {
         type: String,
-        required: true
+        required: true,
     },
     bio: {
         type: String,
     },
-    roles: [{
-        type: 'String'
-    }],
     isVerified: {
         type: Boolean,
         default: false
@@ -32,9 +29,15 @@ const userSchema = new Schema({
         type: Boolean,
         default: true
     },
-    date:{
+    date: {
         type: Date,
         default: Date.now()
+    },
+    passwordResetToken: {
+        type: String
+    },
+    passwordResetExpires: {
+        type: Date
     }
 })
 

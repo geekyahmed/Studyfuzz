@@ -5,8 +5,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
-const indexRoute = require('./routes/indexRoute')
-const userRoute = require('./routes/userRoute')
+const authRoutes = require('./routes/authRoutes')
+const profileRoutes = require('./routes/profileRoutes')
 const port = require('./config/port')
 const db = require('./config/db')
 const session = require('express-session');
@@ -55,8 +55,7 @@ app.use(passport.session());
 
 app.use(variables);
 
-app.use('/', indexRoute);
-app.use('/user', userRoute);
+app.use('/', authRoutes);
 
 
 app.listen(port.portID, (req, res) => {

@@ -13,6 +13,7 @@ module.exports = {
         try {
             // execute query with page and limit values
             const posts = await Post.find()
+          
                 .lean()
                 .limit(limit * 1)
                 .skip((page - 1) * limit)
@@ -26,7 +27,7 @@ module.exports = {
             // get total documents in the Posts collection
             const countPosts = await Post.countDocuments();
             const countUsers = await User.countDocuments();
-
+            
             if (req.user) {
                 res.render('user/feeds', {
                     posts: posts,
@@ -41,5 +42,6 @@ module.exports = {
             console.error(err.message);
         }
     }
+
 
 }

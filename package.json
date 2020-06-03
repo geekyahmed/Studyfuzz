@@ -1,7 +1,7 @@
 {
-  "name": "fuzzy-buzz",
+  "name": "study-",
   "version": "1.0.0",
-  "description": "a social media platform for developers ",
+  "description": "a school review/finder web application for students ",
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
@@ -19,6 +19,7 @@
     "express-handlebars": "^4.0.4",
     "express-session": "^1.17.1",
     "mongoose": "^5.9.16",
+    "node-time-ago": "^1.0.0",
     "nodemailer": "^6.4.8",
     "nodemon": "^2.0.4",
     "passport": "^0.4.1",

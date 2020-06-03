@@ -46,8 +46,8 @@ passport.deserializeUser(function (id, done) {
 
 
 router.route('/register')
-    .get(authController.getRegister)    
-    .post(authController.postRegister)
+    .get(authController.getRegister)
+    .post(authController.registerUser)
 
 router.route('/login')
     .get(authController.getLogin)
@@ -55,7 +55,10 @@ router.route('/login')
         successRedirect: '/user/feeds',
         failureRedirect: '/login',
         session: true
-    }),authController.postLogin)
+    }), authController.loginUser)
+
+    router.route('/confirm')
+        .post(authController.confirmToken)
 
 
-    module.exports = router
+module.exports = router

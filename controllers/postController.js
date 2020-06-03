@@ -1,5 +1,5 @@
-const User = require('../models/userModel')
-const Post = require('../models/postModel')
+const User = require('../models/userModel').User
+const Post = require('../models/postModel').Post
 const Comment = require('../models/commentModel')
 
 module.exports = {
