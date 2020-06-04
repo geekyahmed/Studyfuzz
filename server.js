@@ -6,9 +6,10 @@ const cookieParser = require('cookie-parser');
 const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes')
-const profileRoutes = require('./routes/profileRoutes')
+const feedRoutes = require('./routes/feedRoutes')
 const port = require('./config/port')
 const db = require('./config/db')
+const fileUpload = require('express-fileupload');
 const session = require('express-session');
 const passport = require('passport');
 const {variables} = require('./middlewares/variables')
@@ -29,6 +30,8 @@ app.use(session({
     secret: process.env.SESSION_KEY,
     saveUninitialized: true
 }))
+
+app.use(fileUpload())
 
 //Setting Up Mongoose
 mongoose.connect(db.dbURL, {
@@ -55,7 +58,9 @@ app.use(passport.session());
 
 app.use(variables);
 
-app.use('/', authRoutes);
+app.use('/auth', authRoutes);
+app.use('/', feedRoutes);
+
 
 
 app.listen(port.portID, (req, res) => {

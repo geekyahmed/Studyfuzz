@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const timeAgo = require('node-time-ago')
 const Schema = mongoose.Schema
 
 const userSchema = new Schema({
@@ -20,6 +21,11 @@ const userSchema = new Schema({
     },
     bio: {
         type: String,
+    },
+    role: {
+        type: String,
+        default: 'student',
+        enum: ['student', 'school', 'admin']
     },
     isVerified: {
         type: Boolean,

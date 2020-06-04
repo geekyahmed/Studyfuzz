@@ -52,12 +52,13 @@ router.route('/register')
 router.route('/login')
     .get(authController.getLogin)
     .post(passport.authenticate('local', {
-        successRedirect: '/user/feeds',
-        failureRedirect: '/login',
+        successRedirect: '/',
+        failureRedirect: '/auth/login',
         session: true
     }), authController.loginUser)
 
     router.route('/confirm')
+        .get(authController.getConfirm)
         .post(authController.confirmToken)
 
 
