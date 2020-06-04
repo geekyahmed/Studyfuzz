@@ -1,16 +1,12 @@
 <div class="register-photo">
 	<div class="form-container">
 		<div class="image-holder"></div>
-		<form action="/auth/register" method="post">
-			<h2 class="text-center"><strong>Create</strong> an account.</h2><select class="border rounded form-control"
-				name="d" value="dd">
-				<option value="student" selected="">Student</option>
-				<option value="school">School</option>
-			</select>
+		<form action="/auth/student/register" method="post">
+			<h2 class="text-center"><strong>Create</strong> an account as a <strong>Student</strong></h2>
 			<div class="form-group"><input class="border rounded form-control" type="email" name="email"
 					placeholder="Email"></div><input class="border rounded form-control" type="text" name="fullname"
-				placeholder="Full Name"><input class="border rounded form-control" type="text" name="username"
-				placeholder="Username">
+				placeholder="Full Name" autocomplete="username"><input class="border rounded form-control" type="text" name="username"
+				placeholder="Username" autocomplete="username">
 			<div class="form-group"><input class="border rounded form-control" type="password" name="password"
 					placeholder="Password" autofocus="" autocomplete="off"></div>
 			<div class="form-group">
@@ -18,7 +14,8 @@
 							type="checkbox">I agree to the license terms.</label></div>
 			</div>
 			<div class="form-group"><button class="btn btn-primary btn-block border rounded" type="submit">Sign
-					Up</button></div><a href="/auth/login" class="already">You already have an account? Login here.</a>
+					Up</button></div><a href="/auth/student/login" class="already">You already have an account? Login
+				here.</a>
 		</form>
 	</div>
 </div>

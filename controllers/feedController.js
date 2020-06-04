@@ -1,8 +1,8 @@
-const User = require('../models/userModel').User
+const School = require('../models/schoolModel').School
 
 module.exports = {
 
-    getUsers: async (req, res) => {
+    getSchools: async (req, res) => {
         // destructure page and limit and set default values
         const {
             page = 1, limit = 20
@@ -11,24 +11,20 @@ module.exports = {
         try {
             // execute query with page and limit values
 
-            const users = await User.find()
+            const schools = await School.find()
                 .lean()
                 .limit(limit * 1)
                 .skip((page - 1) * limit)
                 .exec();
             // get total documents in the Posts collection
-            const countUsers = await User.countDocuments();
+            const countSchools = await School.countDocuments();
             
-            if (req.user) {
                 res.render('user/feeds', {
                     title: 'Study Fuzz - Connecting Students',
-                    users: users,
-                    totalPages: Math.ceil(countUsers / limit),
+                    schools: schools,
+                    totalPages: Math.ceil(countSchools / limit),
                     currentPage: page
                 });
-            } else {
-                res.redirect('/auth/login')
-            }
         } catch (err) {
             console.error(err.message);
         }

@@ -1,12 +1,8 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const userSchema = new Schema({
-    fullname: {
-        type: String,
-        required: true
-    },
-    username: {
+const schoolSchema = new Schema({
+    name: {
         type: String,
         required: true
     },
@@ -14,17 +10,49 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    phone_number: {
+        type: String,
+        required: true
+    },
     password: {
         type: String,
         required: true,
     },
+    street: {
+        type: String
+    },
+    country: {
+        type: String,
+    },
+    city: {
+        type: String,
+    },
+    lga: {
+        type: String
+    },
+
     bio: {
         type: String,
     },
     role: {
         type: String,
-        default: 'student',
+        default: 'school',
         enum: ['student', 'school', 'admin']
+    },
+    website: {
+        type: String
+    },
+    facebook: {
+        type: String
+    },
+    twitter: {
+        type: String
+    },
+    instagram: {
+        type: String
+    },
+    linkedin: {
+        type: String
     },
     isVerified: {
         type: Boolean,
@@ -43,5 +71,5 @@ const userSchema = new Schema({
 })
 
 module.exports = {
-    User: mongoose.model('user', userSchema)
+    School: mongoose.model('school', schoolSchema)
 };

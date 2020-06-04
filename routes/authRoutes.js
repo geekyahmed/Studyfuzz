@@ -3,6 +3,8 @@ const router = express.Router();
 const authController = require('../controllers/authController')
 const passport = require('passport')
 const User = require('../models/userModel').User;
+const School = require('../models/schoolModel').School;
+
 const bcrypt = require('bcryptjs');
 const LocalStrategy = require('passport-local')
 
@@ -32,10 +34,33 @@ passport.use(new LocalStrategy({
         });
 
     });
+    School.findOne({
+        email: email
+    }).then(school => {
+        if (!school) {
+            return done(null, false);
+        }
+
+        bcrypt.compare(password, school.password, (err, passwordMatched) => {
+
+            if (!passwordMatched) {
+                return done(null, false);
+            }
+            else{
+            return done(null, school);
+
+            }
+        });
+
+    });
 }));
 
-passport.serializeUser(function (user, done) {
+passport.serializeUser(function (user,done) {
     done(null, user.id);
+});
+
+passport.serializeUser(function (school, done) {
+    done(null, school.id);
 });
 
 passport.deserializeUser(function (id, done) {
@@ -43,23 +68,41 @@ passport.deserializeUser(function (id, done) {
         done(err, user);
     });
 });
+passport.deserializeUser(function (id, done) {
+    School.findById(id, function (err, school) {
+        done(err, school);
+    });
+});
 
+router.route('/student/register')
+    .get(authController.getRegisterStudent)
+    .post(authController.registerStudent)
 
-router.route('/register')
-    .get(authController.getRegister)
-    .post(authController.registerUser)
-
-router.route('/login')
-    .get(authController.getLogin)
+router.route('/student/login')
+    .get(authController.getStudentLogin)
     .post(passport.authenticate('local', {
         successRedirect: '/',
-        failureRedirect: '/auth/login',
+        failureRedirect: '/auth/student/login',
         session: true
-    }), authController.loginUser)
+    }), authController.loginStudent)
 
-    router.route('/confirm')
-        .get(authController.getConfirm)
-        .post(authController.confirmToken)
+router.route('/student/confirm/:token')
+    .get(authController.confirmStudentToken)
+
+router.route('/school/register')
+    .get(authController.getRegisterSchool)
+    .post(authController.registerSchool)
+
+router.route('/school/login')
+    .get(authController.getSchoolLogin)
+    .post(passport.authenticate('local', {
+        successRedirect: '/',
+        failureRedirect: '/auth/school/login',
+        session: true
+    }), authController.loginStudent)
+
+router.route('/school/confirm/:token')
+    .get(authController.confirmSchoolToken)
 
 
 module.exports = router

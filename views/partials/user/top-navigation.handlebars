@@ -6,16 +6,41 @@
 			<div class="collapse navbar-collapse" id="navcol-1">
 				<ul class="nav navbar-nav ml-auto">
 					{{#if user}}
+
 					<li class="nav-item" role="presentation"><a class="nav-link" href="/">Home</a></li>
 					<li class="nav-item" role="presentation"><a class="nav-link" href="/profile">Profile</a></li>
-					<a class="btn btn-light action-button" role="button" href="#">Log Out at {{user.email}} </a>
+					<a class="btn btn-light action-button" role="button" href="#">Log Out at {{fullname}} </a>
 					{{else}}
-					<li class="nav-item" role="presentation"><a class="nav-link" href="/auth/login">Login</a></li>
-					<li class="nav-item" role="presentation"><a class="nav-link" href="/auth/register">Register</a></li>
-
-					<span class="navbar-text actions"> <a href="/auth/login" class="login">Log In</a><a
-							class="btn btn-light action-button" role="button" href="/auth/register">Sign Up</a></span>
+					{{#if school}}
+					<li class="nav-item" role="presentation"><a class="nav-link" href="/">Home</a></li>
+					<li class="nav-item" role="presentation"><a class="nav-link" href="/profile">Profile</a></li>
+					<a class="btn btn-light action-button" role="button" href="#">Log Out at {{name}} </a>
+					{{else}}
+					<li class="nav-item" role="presentation"><a class="nav-link" href="/">Home</a></li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+							Student
+						</a>
+						<div class="dropdown-menu">
+							<a class="nav-link" href="/auth/student/login">Login</a>
+							<a class="nav-link" href="/auth/student/register">Register</a>
+						</div>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbardrop2" data-toggle="dropdown">
+							School
+						</a>
+						<div class="dropdown-menu">
+							<a class="nav-link" href="/auth/school/login">Login</a>
+							<a class="nav-link" href="/auth/school/register">Register</a>
+						</div>
+					</li>
+					<li class="nav-item" role="presentation"><a class="nav-link" href="/">Contact</a></li>
+					<li class="nav-item" role="presentation"><a class="nav-link" href="/">About</a></li>
+					<li class="nav-item" role="presentation"><a class="nav-link" href="/">FAQS</a></li>
 					{{/if}}
+					{{/if}}
+
 				</ul>
 			</div>
 		</div>
