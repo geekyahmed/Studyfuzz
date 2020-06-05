@@ -113,6 +113,7 @@ module.exports = {
                     throw err;
             });
         }
+        const address = req.body.address
         const email = req.body.email;
         const phone_number = req.body.phone_number
         const password = req.body.password; {

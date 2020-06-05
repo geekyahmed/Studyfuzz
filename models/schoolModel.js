@@ -18,7 +18,7 @@ const schoolSchema = new Schema({
         type: String,
         required: true,
     },
-    street: {
+    address: {
         type: String
     },
     country: {

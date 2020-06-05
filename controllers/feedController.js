@@ -7,6 +7,13 @@ module.exports = {
         const {
             page = 1, limit = 20
         } = req.query;
+    const isVerified = req.query.verified;
+
+        const match = {}
+
+        if (req.query.isVerified) {
+            match.published = req.query.verified === 'true'
+        }
 
         try {
             // execute query with page and limit values
@@ -18,13 +25,15 @@ module.exports = {
                 .exec();
             // get total documents in the Posts collection
             const countSchools = await School.countDocuments();
-            
-                res.render('user/feeds', {
-                    title: 'Study Fuzz - Connecting Students',
-                    schools: schools,
-                    totalPages: Math.ceil(countSchools / limit),
-                    currentPage: page
-                });
+
+            res.render('user/feeds', {
+                title: 'Study Fuzz - Connecting Students',
+                match
+                
+                schools: schools,
+                totalPages: Math.ceil(countSchools / limit),
+                currentPage: page
+            });
         } catch (err) {
             console.error(err.message);
         }
