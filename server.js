@@ -3,7 +3,6 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes')
 const feedRoutes = require('./routes/feedRoutes')
@@ -12,7 +11,9 @@ const db = require('./config/db')
 const fileUpload = require('express-fileupload');
 const session = require('express-session');
 const passport = require('passport');
-const {variables} = require('./middlewares/variables')
+const {
+    variables
+} = require('./middlewares/variables')
 const app = express();
 
 
@@ -45,21 +46,13 @@ mongoose.connect(db.dbURL, {
         console.log('MongoDB connection failed')
     })
 
-//Setting Up Views
-app.set('views', path.join(__dirname, 'views'));
-app.engine('handlebars', exphbs({
-    defaultLayout: 'index'
-}));
-app.set('view engine', 'handlebars');
-app.use(express.static(path.join(__dirname, 'public')));
-
+//Setting up Passport
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(variables);
 
-app.use('/auth', authRoutes);
-app.use('/', feedRoutes);
+app.use('/api/', authRoutes, feedRoutes);
 
 
 

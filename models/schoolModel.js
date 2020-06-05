@@ -18,26 +18,14 @@ const schoolSchema = new Schema({
         type: String,
         required: true,
     },
-    address: {
-        type: String
-    },
     country: {
         type: String,
     },
     city: {
         type: String,
     },
-    lga: {
-        type: String
-    },
-
     bio: {
         type: String,
-    },
-    role: {
-        type: String,
-        default: 'school',
-        enum: ['student', 'school', 'admin']
     },
     website: {
         type: String

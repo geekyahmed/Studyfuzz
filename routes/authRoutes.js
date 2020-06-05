@@ -3,7 +3,6 @@ const router = express.Router();
 const authController = require('../controllers/authController')
 const passport = require('passport')
 const User = require('../models/userModel').User;
-
 const bcrypt = require('bcryptjs');
 const LocalStrategy = require('passport-local')
 
@@ -47,22 +46,17 @@ passport.deserializeUser(function (id, done) {
 });
 
 router.route('/register')
-    .get(authController.getRegisterStudent)
     .post(authController.registerStudent)
 
 router.route('/login')
-    .get(authController.getStudentLogin)
     .post(passport.authenticate('local', {
-        successRedirect: '/',
-        failureRedirect: '/login',
         session: true
     }), authController.loginStudent)
 
-router.route('/confirm/:token')
+router.route('/verify/:token')
     .get(authController.confirmStudentToken)
 
 router.route('/school/register')
-    .get(authController.getRegisterSchool)
     .post(authController.registerSchool)
 
 module.exports = router

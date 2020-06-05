@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const userSchema = new Schema({
-    fullname: {
+    name: {
         type: String,
         required: true
     },
@@ -24,7 +24,7 @@ const userSchema = new Schema({
     role: {
         type: String,
         default: 'student',
-        enum: ['student', 'school', 'admin']
+        enum: ['student', 'teacher', 'admin']
     },
     isVerified: {
         type: Boolean,

@@ -1,10 +1,9 @@
-const express = require('express')
+const express = require("express");
 const router = express.Router();
-const feedController = require('../controllers/feedController')
+const feedController = require("../controllers/feedController");
 
-router.route('/')
-    .get(feedController.getSchools)
+router.route("/schools").get(feedController.getSchools);
 
+router.route("/students").get(feedController.getStudents);
 
-
-module.exports = router
+module.exports = router;
