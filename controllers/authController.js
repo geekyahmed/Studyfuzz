@@ -106,11 +106,22 @@ module.exports = {
     const email = req.body.email;
     const phone_number = req.body.phone_number;
     const password = req.body.password;
+    const country = req.body.country;
+    const city = req.body.city;
+    const bio = req.body.bio;
+    const website = req.body.website;
+    const facebook = req.body.facebook;
+    const twitter = req.body.twitter;
     {
       School.findOne({
         email: email,
         phone_number: phone_number,
-        role: role || "teacher",
+        country: country,
+        city: city,
+        bio: bio,
+        website: website,
+        facebook : facebook,
+        twitter: twitter
       })
         .select("-password")
         .then(function (currentSchool) {
@@ -121,51 +132,17 @@ module.exports = {
               email: email,
               phone_number: phone_number,
               password: password,
+              country: country,
+              city: city,
+              bio: bio,
+              website: website,
+              facebook: facebook,
+              twitter: twitter,
             });
             bcrypt.genSalt(10, (err, salt) => {
               bcrypt.hash(newSchool.password, salt, (err, hash) => {
                 newSchool.password = hash;
                 newSchool.save().then((school) => {
-                  const token = new Token({
-                    _userId: school._id,
-                    token: crypto.randomBytes(16).toString("hex"),
-                  });
-                  token.save((err) => {
-                    if (err) {
-                      return res.status(500).send({
-                        msg: err.message,
-                      });
-                    } else {
-                      var transporter = nodemailer.createTransport({
-                        service: "gmail",
-                        auth: {
-                          user: process.env.GMAIL_USER,
-                          pass: process.env.GMAIL_PASS,
-                        },
-                      });
-                      const mailOptions = {
-                        from: "Study Fuzz <no-reply@studyfuzz.com>",
-                        to: school.email,
-                        subject: "Verify Your Account",
-                        text:
-                          "Hello there ,\n\n " +
-                          "Please verify your account to be a part of study fuzz by clicking this link: \nhttp://" +
-                          req.headers.host +
-                          "/verify/" +
-                          token.token +
-                          ".\n",
-                      };
-                      transporter.sendMail(mailOptions, (err) => {
-                        if (err) {
-                          console.log(err);
-                        } else {
-                          res.json({
-                            msg: "Verification link sent to" + school.email,
-                          });
-                        }
-                      });
-                    }
-                  });
                   res.json({ msg: "This school has already been registered" });
                 });
               });
@@ -208,7 +185,9 @@ module.exports = {
                       msg: err.message,
                     });
                   } else {
-                    res.status(200).json({msg: "The account has been verified"});
+                    res
+                      .status(200)
+                      .json({ msg: "The account has been verified" });
                   }
                 });
               };
@@ -224,16 +203,16 @@ module.exports = {
         msg: "Your account has not been verified",
       });
     }
-    res.json( {
+    res.json({
       token: generateToken(user),
       user: user,
       role: user.role,
     });
   },
- 
+
   logOut: (req, res) => {
     req.logout();
 
-    res.json({msg : 'You have successfully logged out'})
+    res.json({ msg: "You have successfully logged out" });
   },
 };

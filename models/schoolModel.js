@@ -36,12 +36,6 @@ const schoolSchema = new Schema({
     twitter: {
         type: String
     },
-    instagram: {
-        type: String
-    },
-    linkedin: {
-        type: String
-    },
     isVerified: {
         type: Boolean,
         default: false
