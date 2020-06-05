@@ -1,5 +1,5 @@
 const School = require("../models/schoolModel").School;
-const Student = require("../models/userModel").Student;
+const User = require("../models/userModel").User;
 
 module.exports = {
   getSchools: async (req, res) => {
@@ -44,14 +44,14 @@ module.exports = {
     }
 
     try {
-      const students = await Student.find()
+      const students = await User.find()
         .select("-password")
         .lean()
         .limit(limit * 1)
         .skip((page - 1) * limit)
         .exec();
 
-      const countStudents = await Student.countDocuments();
+      const countStudents = await User.countDocuments();
 
       res.json({
         match,

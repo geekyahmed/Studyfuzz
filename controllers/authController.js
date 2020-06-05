@@ -68,7 +68,7 @@ module.exports = {
                           "Hello there ,\n\n " +
                           "Please verify your account to be a part of study fuzz by clicking this link: \nhttp://" +
                           req.headers.host +
-                          "/auth/student/confirm/" +
+                          "/confirm/" +
                           token.token +
                           ".\n",
                       };
@@ -83,7 +83,7 @@ module.exports = {
                       });
                     }
                   });
-                  res.json({ msg: "You have successfully logged in" });
+                  res.json({ msg: "You have successfully registered in" });
                 });
               });
             });
