@@ -6,23 +6,27 @@ module.exports = {
     const { page = 1, limit = 20 } = req.query;
 
     const match = {};
+    const sort = {};
 
-    if (req.query.city) {
-      const city = req.query.city;
-
-      match.city = req.query.city;
+    if (req.query.isVerfied) {
+      match.isVerfied = req.query.isVerified === "true";
+    }
+    if (req.query.sortBy && req.query.OrderBy) {
+      sort[req.query.sortBy] = req.query.OrderBy === "desc" ? -1 : 1;
     }
 
     try {
       const schools = await School.find()
         .select("-password")
-        .lean()
         .limit(limit * 1)
         .skip((page - 1) * limit)
         .exec();
       const countSchools = await School.countDocuments();
 
       res.json({
+        options: {
+          sort,
+        },
         match,
         schools: schools,
         totalPages: Math.ceil(countSchools / limit),
@@ -34,14 +38,6 @@ module.exports = {
   },
   getStudents: async (req, res) => {
     const { page = 1, limit = 20 } = req.query;
-
-    const match = {};
-
-    if (req.query.city) {
-      const city = req.query.city;
-
-      match.city = req.query.city;
-    }
 
     try {
       const students = await User.find()

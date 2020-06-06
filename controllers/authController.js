@@ -120,12 +120,13 @@ module.exports = {
         city: city,
         bio: bio,
         website: website,
-        facebook : facebook,
-        twitter: twitter
+        facebook: facebook,
+        twitter: twitter,
       })
         .select("-password")
         .then(function (currentSchool) {
           if (currentSchool) {
+            res.json({ msg: "This school has already been registered" });
           } else {
             const newSchool = new School({
               name: name,
@@ -143,7 +144,7 @@ module.exports = {
               bcrypt.hash(newSchool.password, salt, (err, hash) => {
                 newSchool.password = hash;
                 newSchool.save().then((school) => {
-                  res.json({ msg: "This school has already been registered" });
+                  res.json({ msg: "This school has been registered" });
                 });
               });
             });

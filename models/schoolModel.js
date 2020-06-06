@@ -36,7 +36,7 @@ const schoolSchema = new Schema({
     twitter: {
         type: String
     },
-    isVerified: {
+    isApproved: {
         type: Boolean,
         default: false
     },
