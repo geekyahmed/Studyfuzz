@@ -1,7 +1,7 @@
 {
-  "name": "study-",
+  "name": "study-fuzz",
   "version": "1.0.0",
-  "description": "a school review/finder web application for students ",
+  "description": "a web application for students to connect with tutors",
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
@@ -13,13 +13,12 @@
   "dependencies": {
     "accesscontrol": "^2.2.1",
     "bcryptjs": "^2.4.3",
-    "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-fileupload": "^1.1.7-alpha.3",
-    "express-handlebars": "^4.0.4",
     "express-session": "^1.17.1",
+    "express-validation": "^3.0.5",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.16",
     "morgan": "^1.10.0",
@@ -29,6 +28,7 @@
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
+    "response-time": "^2.3.2",
     "router": "^1.3.5"
   },
   "devDependencies": {

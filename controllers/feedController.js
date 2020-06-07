@@ -28,7 +28,7 @@ module.exports = {
           sort,
         },
         match,
-        schools: schools,
+        schools,
         totalPages: Math.ceil(countSchools / limit),
         currentPage: page,
       });

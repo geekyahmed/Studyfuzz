@@ -1,6 +1,7 @@
 require("dotenv").config();
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const User = require("../models/userModel").User;
 const School = require("../models/schoolModel").School;
@@ -43,10 +44,9 @@ module.exports = {
               bcrypt.hash(newUser.password, salt, (err, hash) => {
                 newUser.password = hash;
                 newUser.save().then((user) => {
-                  const token = new Token({
-                    _userId: user._id,
-                    token: crypto.randomBytes(16).toString("hex"),
-                  });
+                  const token = jwt.sign({ id : user._id}, config.secret,{
+                    expresIn: 86400
+                  })
                   token.save((err) => {
                     if (err) {
                       return res.status(500).send({
@@ -198,16 +198,20 @@ module.exports = {
     });
   },
   loginStudent: (req, res) => {
-    if (!user.isVerified) {
-      return res.status(401).json({
-        type: "not- verified",
-        msg: "Your account has not been verified",
-      });
-    }
-    res.json({
-      token: generateToken(user),
-      user: user,
-      role: user.role,
+    let jwtToken = jwt.sign(
+      {
+        email: user.email,
+        userId: user._id,
+      },
+      "longer-secret-is-better",
+      {
+        expiresIn: "1h",
+      }
+    );
+    res.status(200).json({
+      token: jwtToken,
+      expiresIn: 3600,
+      msg: user,
     });
   },
 
