@@ -53,8 +53,8 @@ router.route('/login')
         session: true
     }), authController.loginStudent)
 
-router.route('/verify/:token')
-    .get(authController.confirmStudentToken)
+router.route('/verify')
+    .post(authController.confirmStudentToken)
 
 router.route('/school/register')
     .post(authController.registerSchool)

@@ -32,7 +32,9 @@ module.exports = {
         .select("-password")
         .then(function (currentUser) {
           if (currentUser) {
-            res.json({ msg: "This user has already been registered" });
+            res.send({
+              msg: "This user has already been registered",
+            });
           } else {
             const newUser = new User({
               name: name,
@@ -44,9 +46,10 @@ module.exports = {
               bcrypt.hash(newUser.password, salt, (err, hash) => {
                 newUser.password = hash;
                 newUser.save().then((user) => {
-                  const token = jwt.sign({ id : user._id}, config.secret,{
-                    expresIn: 86400
-                  })
+                  const token = new Token({
+                    _userId: user._id,
+                    token: crypto.randomBytes(17).toString("hex"),
+                  });
                   token.save((err) => {
                     if (err) {
                       return res.status(500).send({
@@ -68,22 +71,29 @@ module.exports = {
                           "Hello there ,\n\n " +
                           "Please verify your account to be a part of study fuzz by clicking this link: \nhttp://" +
                           req.headers.host +
-                          "/confirm/" +
+                          "/api/verify/" +
                           token.token +
                           ".\n",
                       };
                       transporter.sendMail(mailOptions, (err) => {
                         if (err) {
-                          console.log(err);
+                           console.log(err);
                         } else {
-                          res.json({
+                          return res.send({
                             msg: "Verification link sent to" + user.email,
                           });
                         }
                       });
                     }
                   });
-                  res.json({ msg: "You have successfully registered in" });
+                  return res.send({
+                    msg: "You have successfully registered ",
+                    token:
+                      "https://" +
+                      req.headers.host +
+                      "/api/verify/" +
+                      token.token,
+                  });
                 });
               });
             });
@@ -93,16 +103,6 @@ module.exports = {
   },
   registerSchool: (req, res) => {
     const name = req.body.name;
-    const role = req.body.role;
-    let filename = "";
-    if (req.files) {
-      let file = req.files.uploadedFile;
-      filename = file.name;
-      let uploadDir = "./public/uploads/";
-      file.mv(uploadDir + filename, (err) => {
-        if (err) throw err;
-      });
-    }
     const email = req.body.email;
     const phone_number = req.body.phone_number;
     const password = req.body.password;
@@ -126,7 +126,9 @@ module.exports = {
         .select("-password")
         .then(function (currentSchool) {
           if (currentSchool) {
-            res.json({ msg: "This school has already been registered" });
+            return res.send({
+              msg: "This school has already been registered",
+            });
           } else {
             const newSchool = new School({
               name: name,
@@ -144,7 +146,9 @@ module.exports = {
               bcrypt.hash(newSchool.password, salt, (err, hash) => {
                 newSchool.password = hash;
                 newSchool.save().then((school) => {
-                  res.json({ msg: "This school has been registered" });
+                  return res.status(200).send({
+                    msg: "This school has been registered",
+                  });
                 });
               });
             });
@@ -153,71 +157,79 @@ module.exports = {
     }
   },
   confirmStudentToken: (req, res) => {
-    const token = req.params.id;
-    const tokenVerified = !!req.body.isVerified;
-    Token.findById(token, (token) => {
-      if (!token) {
-        return res.status(400).send({
-          type: "not-verified",
-          msg: "Unable to find a valid token",
-        });
-      } else {
-        User.findOne(
-          {
-            id: token._userId,
-          },
-          (user) => {
-            if (!token) {
-              return res.status(400).json({
-                msg: "Unable to find a user for this token",
-              });
-            }
-            if (tokenVerified) {
-              return res.status(400).json({
-                type: "already-verified",
-                msg: "This user has been verified",
-              });
-            } else
-              (user) => {
-                isVerified = tokenVerified;
+    Token.findOne(
+      {
+        token: req.body.token,
+      },
+      (token) => {
+        if (!token) {
+          return res.status(400).send({
+            type: "not-verified",
+            msg: "Unable to find a valid token",
+          });
+        } else {
+          User.findOne(
+            {
+              _id: token._userId,
+              email: req.body.email,
+            },
+            (user) => {
+              if (!user) {
+                return res.status(400).send({
+                  msg: "Unable to find a user for this token",
+                });
+              }
+              if (user.isVerified) {
+                return res.status(400).send({
+                  type: "already-verified",
+                  msg: "This user has been verified",
+                });
+              } else {
+                isVerified = true;
                 user.save((err) => {
                   if (err) {
-                    return res.status(500).json({
+                    return res.status(500).send({
                       msg: err.message,
                     });
                   } else {
-                    res
-                      .status(200)
-                      .json({ msg: "The account has been verified" });
+                    res.status(200).send({
+                      msg: "The account has been verified",
+                    });
                   }
                 });
-              };
-          }
-        );
-      }
-    });
-  },
-  loginStudent: (req, res) => {
-    let jwtToken = jwt.sign(
-      {
-        email: user.email,
-        userId: user._id,
-      },
-      "longer-secret-is-better",
-      {
-        expiresIn: "1h",
+              }
+            }
+          );
+        }
       }
     );
-    res.status(200).json({
-      token: jwtToken,
-      expiresIn: 3600,
-      msg: user,
+  },
+  loginStudent: (req, res) => {
+    User.findOne({ email: req.body.email }, (err, user) => {
+      if (!user) {
+        return res
+          .status(400)
+          .send({
+            msg:
+              "This email address " + req.body.email + "has already been used",
+          });
+      }
+      if (!user.isVerified) {
+        return res.send({
+          type: "not-verified",
+          msg: "Your account has not been verified",
+        });
+      } else {
+        return res.send({ token: generateToken(user), user: user.toJSON() });
+      }
     });
   },
 
   logOut: (req, res) => {
     req.logout();
 
-    res.json({ msg: "You have successfully logged out" });
+    res.json({
+      msg: "You have successfully logged out",
+    });
   },
 };
