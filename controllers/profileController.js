@@ -2,7 +2,7 @@ const User = require("../models/userModel").User;
 
 
 module.exports = {
-  getProfile: async (req, res, ) => {
+  getProfile:  (req, res, ) => {
     return res.send({ msg: "Welcome to your profile" });
   },
   grantAccess: (action, resource) => {

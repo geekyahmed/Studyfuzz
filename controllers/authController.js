@@ -194,7 +194,7 @@ module.exports = {
     );
   },
   loginStudent: (req, res, next) => {
-    return res.send({ msg: "Student Already Logged In" });
+    return res.send({ msg: "Student  Logged In" });
   },
   logOut: (req, res) => {
     if (req.isAuthenticated()) {
